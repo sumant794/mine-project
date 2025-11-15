@@ -1,0 +1,24 @@
+.todo-item{
+  display: grid;
+  grid-template-columns:1fr 1fr 100px 100px;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.todo-item button{
+  padding: 6px 10px;
+  cursor: pointer;
+}
+
+.completed div:first-child {
+  text-decoration: line-through;
+  color: gray;
+}
+
+.edit-input{
+  font-size: 16px;
+  padding: 4px;
+  width: 100%;
+  box-sizing: border-box;
+}

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My First Game</title>
+    <link rel="stylesheet" href="head-tail.css">
+  </head>
+  <body>
+    <div class="container">
+
+      <h1>Heads and Tails Game</h1>
+
+      <div class="btns1">
+        <button onclick="
+        playGame('heads');
+        " class="heads-tails-button"><img src="images/heads.jpg" class="img"></button>
+
+        <button onclick="
+            playGame('tails');
+        " class="heads-tails-button"><img src="images/tails.jpg" class="img"></button>
+      </div>
+     
+
+      <p class="js-result result"></p>
+      <p class="js-move move"></p>
+      <p class="js-score score"></p>
+      <div class="js-updates"></div>
+
+      <div class="btns2">
+        <button onclick="
+          resetScore();
+        " class="js-reset-button reset-button">Reset Score</button>
+
+        <button class="js-auto-play autoplay-button" onclick="
+          
+        ">Auto Play</button>
+      </div>
+    </div>
+
+    <script src="head-tail.js"></script>
+  </body>
+</html>
