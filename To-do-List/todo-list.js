@@ -1,16 +1,27 @@
 const toDoList = JSON.parse(localStorage.getItem('toDoList')) ||
 [];
 
+let currentFilter = 'all';
+
 
 renderList();
 
 function renderList() {
   let html = '';
+  const filteredList = toDoList.filter((task) => {
+    if(currentFilter === 'completed')
+      return task.completed === true;
+    if(currentFilter === 'pending')
+      return task.completed === false;
+    return true;
+  });
 
-  toDoList.forEach((task, index) => {
+  console.log(filteredList);
+
+  filteredList.forEach((task) => {
     const name = task.name;
     const dueDate = task.dueDate;
-
+    const index = toDoList.indexOf(task);
     html += `
       <div class="todo-item ${task.completed ? 'completed' : ''}">
         <div class="task-name">
@@ -166,4 +177,16 @@ function editTaskInline(index) {
   taskDiv.appendChild(cancelButton);
 
   nameInput.focus();
+}
+
+function setFilter(filterType) {
+  currentFilter = filterType;
+  document.querySelectorAll('.filters button').forEach((btn) => {
+    btn.classList.remove('active');
+  });
+
+  const btn = document.querySelector(`.filters button[data-filter="${filterType}"]`);
+
+  if(btn) btn.classList.add('active');
+  renderList();
 }
