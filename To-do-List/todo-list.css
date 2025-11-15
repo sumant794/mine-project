@@ -22,3 +22,13 @@
   width: 100%;
   box-sizing: border-box;
 }
+
+.error {
+  border: 2px solid #ff4d4d;
+  background-color: #ffe5e5;
+}
+.edit-input::placeholder{
+  color: #ff4d4d;
+  opacity: 0.9;
+}
+

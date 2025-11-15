@@ -79,6 +79,7 @@ function editTaskInline(index) {
   const nameInput = document.createElement('input');
   nameInput.type = 'text';
   nameInput.value = task.name;
+  nameInput.className = 'edit-input';
   nameInput.addEventListener('keydown', (e) => {
     if(e.key === 'Enter'){
       saveButton.onclick();
@@ -88,59 +89,81 @@ function editTaskInline(index) {
   const dateInput = document.createElement('input');
   dateInput.type = 'date';
   dateInput.value = task.dueDate;
+  dateInput.className = 'edit-input';
   dateInput.addEventListener('keydown', (e) => {
   if(e.key === 'Enter'){
     saveButton.onclick();
     }
   });
 
+
   const saveButton = document.createElement('button');
   saveButton.textContent = 'Save';
   saveButton.onclick = () => {
     const newName = nameInput.value.trim();
     const newDate = dateInput.value;
+    let valid = true;
 
-    if(newName === ''){
-      errorMessage.textContent = 'Task name cannot be empty.';
-      return;
+    nameInput.classList.remove('error');
+    dateInput.classList.remove('error');
+
+    if (newName === ''){
+      nameInput.value = '';
+      nameInput.placeholder = 'Invalid task name';
+      nameInput.classList.add('error');
+      valid = false;
     }
 
-    if(newDate === '') {
-      errorMessage.textContent = 'Please select a due date.';
-      return;
+    if (newDate === ''){
+      dateInput.type = 'text';
+      dateInput.value = '';
+      dateInput.placeholder = 'Invalid date selection';
+      dateInput.classList.add('error');
+
+      dateInput.addEventListener('focus', () => {
+        dateInput.type = 'date';
+      }, {once: true});
+
+      valid = false;
+    } else {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const selectedDate = new Date(newDate);
+
+      if(selectedDate < today){
+        dateInput.type = 'text';
+        dateInput.value = '';
+        dateInput.placeholder = 'Invalid date selection';
+        dateInput.classList.add('error');
+
+        dateInput.addEventListener('focus', () => {
+        dateInput.type = 'date';
+        }, {once: true});
+
+        valid = false;
+      }
+
     }
 
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    if (!valid) return;
 
-    const selectDate = new Date(newDate);
-    if (selectDate < today){
-      errorMessage.textContent = 'Due date cannot be in past.';
-      return;
-    }
-
-    task.name = nameInput.value;
-    task.dueDate = dateInput.value;
+    task.name = newName;
+    task.dueDate = newDate;
     updateLocalStorage();
     renderList();
-  };
+  }
 
   const cancelButton = document.createElement('button');
-  cancelButton.textContent = 'Cancel'
+  cancelButton.textContent = 'Cancel';
   cancelButton.onclick = () => {
     renderList();
   }
 
-  const errorMessage = document.createElement('div');
-  errorMessage.style.color = 'red';
-  errorMessage.style.MarginTop = '5px';
-  errorMessage.style.fontSize = '14px';
-  
   taskDiv.innerHTML = '';
   taskDiv.appendChild(nameInput);
   taskDiv.appendChild(dateInput);
   taskDiv.appendChild(saveButton);
   taskDiv.appendChild(cancelButton);
-  taskDiv.appendChild(errorMessage);
+
   nameInput.focus();
 }
