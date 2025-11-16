@@ -23,6 +23,8 @@ function renderList() {
     const dueDate = task.dueDate;
     const index = toDoList.indexOf(task);
     html += `
+    <li>
+    <ul>
       <div class="todo-item ${task.completed ? 'completed' : ''}">
         <div class="task-name">
           <input type="checkbox" onclick="
@@ -35,15 +37,19 @@ function renderList() {
         </div>
 
         <div>${dueDate}</div>
+
         <button onclick="
           editTaskInline(${index});
         ">Edit</button>
+
         <button class="js-delete" onclick="
           toDoList.splice(${index}, 1);
           renderList();
           updateLocalStorage();
         ">Delete</button>
       </div>
+      <ul>
+      </li>
       `;
     });
 

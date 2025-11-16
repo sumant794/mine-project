@@ -1,30 +1,40 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="todo-list.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   </head>
   <body>
-    <h1>To-Do List</h1>
+      <div class="main-card">
 
-    <div class="input-area">
-    <input type="text" class="js-input" placeholder="Enter a task">
-    <input type="date" class="js-date-input">
-    <button class="js-add-button">Add</button>
-    </div>
+        <div class="title">
+          <h1><i class="fa-solid fa-clipboard-check"></i>Todo-List<i class="fa-solid fa-pen-to-square"></i></h1>
+        </div>
+        
+        <div class="input-area">
+          <input type="text" class="js-input task-input" placeholder="Enter a task">
+          <input type="date" class="js-date-input">
+          <button class="js-add-button">Add</button>
+        </div>
 
-    <div class="filters">
-      <button data-filter="all" onclick="
-        setFilter('all');
-      ">All</button>
-      <button data-filter="completed" onclick="
-        setFilter('completed');
-      ">Completed</button>
-      <button data-filter="pending" onclick="
-        setFilter('pending');
-      ">Pending</button>
-    </div>
-    
-    <div class="js-list lists"></div>
+        <div class="filters">
+          <button>Filters &gt;&gt;&gt;</button>
+          <button data-filter="all" onclick="
+            setFilter('all');
+          ">All</button>
+          <button data-filter="completed" onclick="
+            setFilter('completed');
+          ">Completed</button>
+          <button data-filter="pending" onclick="
+            setFilter('pending');
+          ">Pending</button>
+        </div>
+        
+        <div class="js-list lists"></div>
+      </div>
+
     <script src="todo-list.js"></script>
   </body>
 </html>
