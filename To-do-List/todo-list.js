@@ -23,9 +23,10 @@ function renderList() {
     const dueDate = task.dueDate;
     const index = toDoList.indexOf(task);
     html += `
-    <li>
-    <ul>
+
       <div class="todo-item ${task.completed ? 'completed' : ''}">
+        <ul>
+          <li>
         <div class="task-name">
           <input type="checkbox" onclick="
             toDoList[${index}].completed = 
@@ -36,20 +37,21 @@ function renderList() {
             ${name}
         </div>
 
-        <div>${dueDate}</div>
+        <div class="dueDate">${dueDate}</div>
 
-        <button onclick="
+        <button class="edit-button" onclick="
           editTaskInline(${index});
         ">Edit</button>
 
-        <button class="js-delete" onclick="
+        <button class="js-delete delete-button" onclick="
           toDoList.splice(${index}, 1);
           renderList();
           updateLocalStorage();
-        ">Delete</button>
+        "><i class="fa-solid fa-trash-can"></i></button>
+         </li>
+        </ul>
       </div>
-      <ul>
-      </li>
+     
       `;
     });
 
@@ -91,6 +93,7 @@ function addToList () {
 function editTaskInline(index) {
   const taskDivs = document.querySelectorAll('.todo-item');
   const taskDiv = taskDivs[index];
+  console.log(taskDiv);
   const task = toDoList[index];
 
   const nameInput = document.createElement('input');
