@@ -28,18 +28,22 @@ function renderList() {
         <ul>
           <li>
         <div class="task-name">
-          <label class="check-container">
-            <input type="checkbox" onclick="
-              markCompleted(${index}, this)
-              " ${task.completed ? 'checked' : ''}>
-              <span class="checkmark"></span>
-              ${name}
-          </label>
+        <label class="check-container">
+          <input type="checkbox" onclick="
+            toDoList[${index}].completed = 
+            this.checked;
+            updateLocalStorage();
+            renderList();
+            " ${task.completed ? 'checked' : ''}>
+            <span class="checkmark"></span>
+            ${name}
+        </label>
         </div>
 
         <div class="js-dueDate ${task.complted ? 'completed-text' : ''}">
           ${task.completed ? 'completed' : task.dueDate}
         </div>
+
 
         <button class="edit-button" onclick="
           editTaskInline(${index});
@@ -86,36 +90,10 @@ function addToList () {
     completed: false
   });
   input.value = '';
-  dateInput.value = '';
 
   renderList();
   updateLocalStorage();
   console.log(toDoList);
-}
-
-function markCompleted(index, checkbox) {
-  const item = checkbox.closest('.todo-item');
-
-  if (checkbox.checked) {
-    item.classList.add('completing');
-    
-    item.addEventListener('animationend', function handler () {
-      item.classList.remove('completing');
-      item.classList.add('completed');
-
-      todoList[index].completed = true;
-      updateLocalStorage();
-
-      item.querySelector('.js-dueDate').textContent = 'completed';
-      item.removeEventListener('animationend', handler);
-    });
-  } else {
-    // Uncheck → remove completed
-    item.classList.remove('completed');
-    toDoList[index].completed = false;
-    updateLocalStorage();
-    item.querySelector('.js-dueDate').textContent = toDoList[index].dueDate;
-  }
 }
 
 function editTaskInline(index) {
