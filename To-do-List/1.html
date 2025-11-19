@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .check-container{
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            user-select: none;
+            font-size: 16px;
+        }
+        .check-container input{
+            display: none;
+        }
+        .checkmark {
+            width: 18px;
+            height: 18px;
+            background: #f1f1f1;
+            border: 2px solid #666;
+            border-radius: 18px;
+            position: relative;
+        }
+        .check-container input:checked + .checkmark {
+            background: #4fc3f7;
+            border-color: #4fc3f7;
+        }
+        .check-container input:checked + .checkmark::after{
+            content: "";
+            position: absolute;
+            left: 5px;
+            top: 2px;
+            width: 4px;
+            height: 9px;
+            border: solid red;
+            border-width: 0 3px 3px 0;
+            transform: rotate(45deg);
+        }
+
+    </style>
+</head>
+<body>
+    <label class="check-container">
+        <input type="checkbox">
+        <span class="checkmark"></span>
+        Subscribe
+    </label>
+</body>
+</html>

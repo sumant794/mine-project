@@ -261,33 +261,15 @@ li .delete-button:hover{
   border-radius: 4px;
 }
 
-/* Sliding green background animation */
+/* Sliding right animation */
+@keyframes slideRight {
+  0% { transform: translateX(0); }
+  50% { transform: translateX(20px); }
+  100% { transform: translateX(0); }
+}
+
 .todo-item.completing {
-  position: relative;
-  overflow: hidden;
-}
-
-.todo-item.completing::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0;
-  height: 100%;
-  width: 0;
-  background-color: #d4f8d4; /* light green sliding */
-  z-index: 0;
-  animation: slideGreen 3s forwards;
-}
-
-@keyframes slideGreen {
-  0% { width: 0%; }
-  100% { width: 100%; }
-}
-
-/* Make the content above the sliding background */
-.todo-item.completing > * {
-  position: relative;
-  z-index: 1;
+  animation: slideRight 0.5s ease forwards;
 }
 
 /* Completed task styling */
@@ -295,13 +277,20 @@ li .delete-button:hover{
   border-left: 3px solid green;
 }
 
-.todo-item.completed .task-name,
-.todo-item.completed .js-dueDate,
-.todo-item.completed .edit-button,
-.todo-item.completed .delete-button {
+.todo-item.completed .task-name {
   color: green;
   font-weight: 600;
-  border-color: green; /* buttons */
+}
+
+.todo-item.completed .js-dueDate {
+  color: green;
+  font-weight: 600;
+}
+
+.todo-item.completed .edit-button,
+.todo-item.completed .delete-button {
+  border-color: green;
+  color: green;
 }
 
 /* Hover effect for completed task */
