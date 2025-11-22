@@ -27,6 +27,7 @@ function renderList() {
       <div class="todo-item ${task.completed ? 'completed' : ''}">
         <ul>
           <li>
+          <span class="left-border"></span>
         <div class="task-name">
         <label class="check-container">
           <input type="checkbox" onclick="
@@ -78,19 +79,24 @@ document.querySelector('.js-add-button')
 
 
 function addToList () {
-  const input  = document.querySelector('.js-input');
-  let name = input.value;
+  const nameInput  = document.querySelector('.js-input');
+  const newName = nameInput.value;
 
   const dateInput = document.querySelector('.js-date-input');
   const dueDate = dateInput.value;
 
+  const valid = validTaskDate(newName, nameInput, dueDate,dateInput);
+
+  if(!valid) return;
+
   toDoList.push({
-    name: name,
+    name: newName,
     dueDate: dueDate,
     completed: false
   });
-  input.value = '';
-
+  nameInput.value = '';
+  dateInput.value = '';
+  nameInput.placeholder = 'Enter a task';
   renderList();
   updateLocalStorage();
   console.log(toDoList);
@@ -99,6 +105,8 @@ function addToList () {
 function editTaskInline(index) {
   const taskDivs = document.querySelectorAll('.todo-item');
   const taskDiv = taskDivs[index];
+
+  console.log(taskDivs);
   console.log(taskDiv);
   const task = toDoList[index];
 
@@ -126,57 +134,20 @@ function editTaskInline(index) {
   const saveButton = document.createElement('button');
   saveButton.textContent = 'Save';
   saveButton.onclick = () => {
+  
     const newName = nameInput.value.trim();
-    const newDate = dateInput.value;
-    let valid = true;
+    const dueDate = dateInput.value;
 
     nameInput.classList.remove('error');
     dateInput.classList.remove('error');
-
-    if (newName === ''){
-      nameInput.value = '';
-      nameInput.placeholder = 'Invalid task name';
-      nameInput.classList.add('error');
-      valid = false;
-    }
-
-    if (newDate === ''){
-      dateInput.type = 'text';
-      dateInput.value = '';
-      dateInput.placeholder = 'Invalid date selection';
-      dateInput.classList.add('error');
-
-      dateInput.addEventListener('focus', () => {
-        dateInput.type = 'date';
-      }, {once: true});
-
-      valid = false;
-    } else {
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-      const selectedDate = new Date(newDate);
-
-      if(selectedDate < today){
-        dateInput.type = 'text';
-        dateInput.value = '';
-        dateInput.placeholder = 'Invalid date selection';
-        dateInput.classList.add('error');
-
-        dateInput.addEventListener('focus', () => {
-        dateInput.type = 'date';
-        }, {once: true});
-
-        valid = false;
-      }
-
-    }
-
+    const valid = validTaskDate(newName, nameInput, dueDate, dateInput);
+  
     if (!valid) return;
 
     task.name = newName;
-    task.dueDate = newDate;
+    task.dueDate = dueDate;
     updateLocalStorage();
-    renderList();
+    renderList(); 
   }
 
   const cancelButton = document.createElement('button');
@@ -186,11 +157,16 @@ function editTaskInline(index) {
   }
 
   taskDiv.innerHTML = '';
-  taskDiv.appendChild(nameInput);
-  taskDiv.appendChild(dateInput);
-  taskDiv.appendChild(saveButton);
-  taskDiv.appendChild(cancelButton);
 
+  const editContainer = document.createElement('div');
+  editContainer.className = 'edit-container';
+
+  editContainer.appendChild(nameInput);
+  editContainer.appendChild(dateInput);
+  editContainer.appendChild(saveButton);
+  editContainer.appendChild(cancelButton);
+
+  taskDiv.appendChild(editContainer);
   nameInput.focus();
 }
 
@@ -202,6 +178,47 @@ function setFilter(filterType) {
 
   const btn = document.querySelector(`.filters button[data-filter="${filterType}"]`);
 
-  if(btn) btn.classList.add('active');
   renderList();
+}
+
+function validTaskDate(newName, nameInput, dueDate, dateInput){
+  let valid = true;
+  if(newName === ''){
+    nameInput.value = '';
+    nameInput.placeholder = 'Invalid task name';
+    nameInput.classList.add('error');
+    valid = false;
+  }
+
+  if (dueDate === ''){
+    dateInput.type = 'text';
+    dateInput.value = '';
+    dateInput.placeholder = 'Invalid date';
+    dateInput.classList.add('error');
+
+    dateInput.addEventListener('focus', () => {
+    dateInput.type = 'date';
+    }, {once: true});
+
+    valid = false;
+} else {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const selectedDate = new Date(dueDate);
+
+  if(selectedDate < today){
+    dateInput.type = 'text';
+    dateInput.value = '';
+    dateInput.placeholder = 'Invalid date selection';
+    dateInput.classList.add('error');
+
+    dateInput.addEventListener('focus', () => {
+    dateInput.type = 'date';
+    }, {once: true});
+
+    valid = false;
+    }
+  }
+  
+  return valid;
 }
