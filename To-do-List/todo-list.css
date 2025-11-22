@@ -436,6 +436,7 @@ li .delete-button:hover{
   }
 }
 
+
 @media (max-width: 550px){
   body{
     padding-top: 40px;
@@ -466,7 +467,7 @@ li .delete-button:hover{
     display: none;
   }
   .lists ul li{
-    height: 80px;
+    height: 100px;
     grid-template-columns:  150px 1fr;
     column-gap: 10px;
     row-gap: 5px;
@@ -494,6 +495,45 @@ li .delete-button:hover{
     grid-column: span 1;
   }
 }
+
+@media (max-width: 480px){
+  body{
+    padding-top: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+  }
+
+  .main-card{
+    width: 100%;
+    max-width: 364px;
+    height: 100vh;
+    max-height: 100vh;
+    border-radius: 0;
+    position: static;     /* remove fixed */
+    display: flex;
+    flex-direction: column;
+  }
+  .main-card .input-area{
+    display: grid;
+    grid-template-columns: auto 130px;
+    grid-template-rows: 1fr;
+    gap: 10px;
+    width: 100%;
+    max-width: 364px;
+  }
+  .input-area button{
+    grid-column : 1 / -1;
+    width: 100%;
+  }
+}
+  
+
+
+
+
 
 
 

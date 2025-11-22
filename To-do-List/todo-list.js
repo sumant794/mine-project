@@ -56,7 +56,7 @@ function renderList() {
           updateLocalStorage();
         "><i class="fa-solid fa-trash-can"></i></button>
          </li>
-        </ul>
+         </ul>
       </div>
      
       `;
@@ -85,6 +85,8 @@ function addToList () {
   const dateInput = document.querySelector('.js-date-input');
   const dueDate = dateInput.value;
 
+  nameInput.classList.remove('error');
+  dateInput.classList.remove('error');
   const valid = validTaskDate(newName, nameInput, dueDate,dateInput);
 
   if(!valid) return;
@@ -219,6 +221,6 @@ function validTaskDate(newName, nameInput, dueDate, dateInput){
     valid = false;
     }
   }
-  
+
   return valid;
 }
