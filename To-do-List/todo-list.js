@@ -1,8 +1,11 @@
+// Loading the todoList array from localStorage and if localStorage is empty an empty array will be created.
 const toDoList = JSON.parse(localStorage.getItem('toDoList')) ||
 [];
 
+// Setting the filter button to all so that from the moment when page loads we can see all tasks.
 let currentFilter = 'all';
 
+// This fuction displays all the tasks on page. 
 renderList();
 
 function renderList() {
@@ -14,8 +17,6 @@ function renderList() {
       return task.completed === false;
     return true;
   });   
-
-  console.log(filteredList);
 
   filteredList.forEach((task) => {
     const name = task.name;
@@ -63,19 +64,18 @@ function renderList() {
     document.querySelector('.js-list')
       .innerHTML = html;
 }
-
+// Saving all the tasks to localStorage.
 function updateLocalStorage(){
   localStorage.setItem('toDoList', JSON.stringify(toDoList));
 }
 
-
-
+//Making add button interactive so that when we click it it adds the task to list.
 document.querySelector('.js-add-button')
   .addEventListener('click', () => {
     addToList();
 });
 
-
+// Creating a function which adds the task to list and then it updates the page. 
 function addToList () {
   const nameInput  = document.querySelector('.js-input');
   const newName = nameInput.value;
@@ -102,6 +102,42 @@ function addToList () {
   console.log(toDoList);
 }
 
+//Here we are changing the filter button to whatever button we click.
+const filterButton = document.querySelectorAll('.filters button');
+filterButton.forEach((btn) => {
+  if(btn.textContent === 'All') {
+    btn.addEventListener('click', () => {
+      setFilter('all');
+  });
+  }
+
+  if(btn.textContent === 'Completed') {
+    btn.addEventListener('click', () => {
+      setFilter('completed');
+  });
+  }
+
+   if(btn.textContent === 'Pending') {
+    btn.addEventListener('click', () => {
+      setFilter('pending');
+  });
+  }
+
+});
+
+//This function actually changes the filter button whenever we call this function.
+function setFilter(filterType) {
+  currentFilter = filterType;
+  document.querySelectorAll('.filters button').forEach((btn) => {
+    btn.classList.remove('active');
+  });
+
+  const btn = document.querySelector(`.filters button[data-filter="${filterType}"]`);
+
+  renderList();
+}
+
+//This function let us edit the task name and duedate and then let us to save it or cancel in the same line.
 function editTaskInline(index) {
   const taskDivs = document.querySelectorAll('.todo-item');
   const taskDiv = taskDivs[index];
@@ -170,18 +206,7 @@ function editTaskInline(index) {
   nameInput.focus();
 }
 
-
-function setFilter(filterType) {
-  currentFilter = filterType;
-  document.querySelectorAll('.filters button').forEach((btn) => {
-    btn.classList.remove('active');
-  });
-
-  const btn = document.querySelector(`.filters button[data-filter="${filterType}"]`);
-
-  renderList();
-}
-
+//All the inputs are valid or not is cheked by this function.
 function validTaskDate(newName, nameInput, dueDate, dateInput){
   let valid = true;
   if(newName === ''){
@@ -224,24 +249,3 @@ function validTaskDate(newName, nameInput, dueDate, dateInput){
   return valid;
 }
 
-const filterButton = document.querySelectorAll('.filters button');
-filterButton.forEach((btn) => {
-  if(btn.textContent === 'All') {
-    btn.addEventListener('click', () => {
-      setFilter('all');
-  });
-  }
-
-  if(btn.textContent === 'Completed') {
-    btn.addEventListener('click', () => {
-      setFilter('completed');
-  });
-  }
-
-   if(btn.textContent === 'Pending') {
-    btn.addEventListener('click', () => {
-      setFilter('pending');
-  });
-  }
-
-});
