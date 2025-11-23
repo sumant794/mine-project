@@ -97,6 +97,11 @@ function addToList () {
   nameInput.value = '';
   dateInput.value = '';
   nameInput.placeholder = 'Enter a task';
+  dateInput.addEventListener('blur', () => {
+  if (!dateInput.value) {
+    dateInput.type = "text";
+  }
+});
   renderList();
   updateLocalStorage();
   console.log(toDoList);
