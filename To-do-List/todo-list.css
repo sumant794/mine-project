@@ -466,7 +466,7 @@ li .delete-button:hover{
 
   .main-card{
     width: 100%;
-    max-width: 364px;
+    max-width: 420px;
     height: 100vh;
     max-height: 100vh;
     border-radius: 0;
@@ -476,11 +476,15 @@ li .delete-button:hover{
   }
   .main-card .input-area{
     display: grid;
-    grid-template-columns: auto 145px;
+    grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr;
     gap: 10px;
     width: 100%;
-    max-width: 364px;
+    max-width: 420px;
+  }
+  .input-area input{
+    min-width: 0;
+    max-width: 100%;
   }
   .input-area button{
     grid-column : 1 / -1;
