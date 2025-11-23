@@ -476,7 +476,7 @@ li .delete-button:hover{
   }
   .main-card .input-area{
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: 170px 170px;
     grid-template-rows: 1fr;
     gap: 10px;
     width: 100%;
