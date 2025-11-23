@@ -3,7 +3,6 @@ const toDoList = JSON.parse(localStorage.getItem('toDoList')) ||
 
 let currentFilter = 'all';
 
-
 renderList();
 
 function renderList() {
@@ -14,7 +13,7 @@ function renderList() {
     if(currentFilter === 'pending')
       return task.completed === false;
     return true;
-  });
+  });   
 
   console.log(filteredList);
 
@@ -23,42 +22,41 @@ function renderList() {
     const dueDate = task.dueDate;
     const index = toDoList.indexOf(task);
     html += `
-
       <div class="todo-item ${task.completed ? 'completed' : ''}">
         <ul>
-          <li>
-          <span class="left-border"></span>
-        <div class="task-name">
-        <label class="check-container">
-          <input type="checkbox" onclick="
-            toDoList[${index}].completed = 
-            this.checked;
-            updateLocalStorage();
-            renderList();
-            " ${task.completed ? 'checked' : ''}>
-            <span class="checkmark"></span>
-            ${name}
-        </label>
-        </div>
+            <li>
+              <span class="left-border"></span>
 
-        <div class="js-dueDate ${task.complted ? 'completed-text' : ''}">
-          ${task.completed ? 'completed' : task.dueDate}
-        </div>
+              <div class="task-name">
+                <label class="check-container">
+                  <input type="checkbox" onclick="
+                    toDoList[${index}].completed = 
+                    this.checked;
+                    updateLocalStorage();
+                    renderList();
+                    " ${task.completed ? 'checked' : ''}>
+                    <span class="checkmark"></span>
+                    ${name}
+                </label>
+              </div>
+
+              <div class="js-dueDate ${task.complted ? 'completed-text' : ''}">
+                ${task.completed ? 'completed' : task.dueDate}
+              </div>
 
 
-        <button class="edit-button" onclick="
-          editTaskInline(${index});
-        ">Edit</button>
+              <button class="edit-button" onclick="
+                editTaskInline(${index});
+              ">Edit</button>
 
-        <button class="js-delete delete-button" onclick="
-          toDoList.splice(${index}, 1);
-          renderList();
-          updateLocalStorage();
-        "><i class="fa-solid fa-trash-can"></i></button>
-         </li>
-         </ul>
+              <button class="js-delete delete-button" onclick="
+                toDoList.splice(${index}, 1);
+                renderList();
+                updateLocalStorage();
+              "><i class="fa-solid fa-trash-can"></i></button>
+            </li>
+        </ul>
       </div>
-     
       `;
     });
 
@@ -172,6 +170,7 @@ function editTaskInline(index) {
   nameInput.focus();
 }
 
+
 function setFilter(filterType) {
   currentFilter = filterType;
   document.querySelectorAll('.filters button').forEach((btn) => {
@@ -224,3 +223,25 @@ function validTaskDate(newName, nameInput, dueDate, dateInput){
 
   return valid;
 }
+
+const filterButton = document.querySelectorAll('.filters button');
+filterButton.forEach((btn) => {
+  if(btn.textContent === 'All') {
+    btn.addEventListener('click', () => {
+      setFilter('all');
+  });
+  }
+
+  if(btn.textContent === 'Completed') {
+    btn.addEventListener('click', () => {
+      setFilter('completed');
+  });
+  }
+
+   if(btn.textContent === 'Pending') {
+    btn.addEventListener('click', () => {
+      setFilter('pending');
+  });
+  }
+
+});
